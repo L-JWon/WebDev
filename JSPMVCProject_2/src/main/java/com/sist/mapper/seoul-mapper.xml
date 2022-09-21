@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.seoul-mapper">
+<!-- 
+NO      NOT NULL NUMBER         
+TITLE   NOT NULL VARCHAR2(200)  
+POSTER  NOT NULL VARCHAR2(500)  
+MSG     NOT NULL VARCHAR2(4000) 
+ADDRESS NOT NULL VARCHAR2(300)  
+
+ -->
+<select id="seoulListData" resultType="SeoulVO" parameterType="hashmap">
+ SELECT no,title,poster,msg,address,num
+ FROM (SELECT no,title,poster,msg,address,rownum AS num
+ FROM (SELECT no,title,poster,msg,address
+ FROM seoul_location ORDER BY no ASC))
+ WHERE num BETWEEN #{start} AND #{end}
+</select>
+
+</mapper>
